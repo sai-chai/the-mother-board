@@ -1,17 +1,38 @@
 import Link from "next/link";
 import styled from "styled-components";
 import MainHeader from "components/MainHeader";
+import BoardCard from "components/BoardCard";
+import { PageHeader, PageMain, GridWrapper } from "styles";
 
-export default function IndexPage(props) {
+function IndexPage(props) {
    return (
       <>
          <MainHeader />
-         <MainWrapper></MainWrapper>
+         <PageMain>
+            <PageHeader>
+               <h3>Job Sources</h3>
+            </PageHeader>
+            <GridWrapper>
+               {props.boards.map((board) => (
+                  <BoardCard board={board} />
+               ))}
+            </GridWrapper>
+         </PageMain>
       </>
    );
 }
 
-const MainWrapper = styled.main`
-   background: #d3d3d3;
-   min-height: calc(100vh - 75px);
-`;
+IndexPage.getInitialProps = async (ctx) => {
+   try {
+      const { host } = ctx?.req.headers;
+      const res = await fetch(`http://${host}/api/boards`);
+      const json = await res.json();
+      return { boards: json.data };
+   } catch (err) {
+      return {
+         boards: []
+      };
+   }
+};
+
+export default IndexPage;

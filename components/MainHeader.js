@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-const StyledHeader = styled.header`
-   height: 50px;
-   padding-left: 75px;
-   font-family: Helvetica, Arial, sans-serif;
-   box-shadow: 0px 5px 5px #808080;
-   h1 {
-      font-size: 1.6em;
-   }
-`;
-
 export default function MainHeader() {
    return (
       <StyledHeader>
@@ -17,3 +7,16 @@ export default function MainHeader() {
       </StyledHeader>
    );
 }
+
+const StyledHeader = styled.header`
+   height: 50px;
+   padding: 0 4vw;
+   position: relative;
+   z-index: 100;
+   box-shadow: 0 5px 5px #b0b0b0;
+   h1 {
+      font-size: 1.8em;
+      margin: 0;
+      line-height: 50px;
+   }
+`;

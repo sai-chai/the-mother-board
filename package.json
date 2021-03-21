@@ -1,23 +1,23 @@
 {
-   "name": "the-motherboard",
-   "version": "1.0.0",
-   "scripts": {
-      "dev": "next",
-      "build": "next build",
-      "start": "next start",
-      "post-update": "yarn upgrade --latest"
-   },
-   "dependencies": {
-      "mongoose": "5.12.1",
-      "next": "latest",
-      "react": "^16.13.1",
-      "react-dom": "^16.13.1",
-      "styled-components": "5.2.1"
-   },
-   "devDependencies": {
-      "babel-plugin-styled-components": "1.12.0"
-   },
-   "license": "MIT",
-   "keywords": [],
-   "description": ""
+  "name": "the-mother-board",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "post-update": "yarn upgrade --latest"
+  },
+  "dependencies": {
+    "mongoose": "5.12.1",
+    "next": "latest",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "5.2.1"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "1.12.0"
+  },
+  "license": "MIT",
+  "keywords": [],
+  "description": ""
 }
