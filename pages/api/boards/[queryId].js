@@ -13,13 +13,20 @@ export default async function handler(req, res) {
    switch (method) {
       case "GET":
          try {
-            const board = await Board.findOne({
-               _id: queryId
-            }).project({
-               root_domain: 1
-            });
+            const board = await Board.findOne(
+               {
+                  _id: queryId
+               },
+               {
+                  name: 1,
+                  root_domain: 1
+               }
+            );
             const opportunities = await Opportunity.find({
-               url: { $regex: `${board.root_domain}`, $options: "i" }
+               url: {
+                  $regex: `^https?\\:\\/\\/(?:\\w*\\.)*${board.root_domain}\\/.*$`,
+                  $options: "i"
+               }
             });
             res.status(200).json({ success: true, data: opportunities });
          } catch (err) {
@@ -30,13 +37,3 @@ export default async function handler(req, res) {
          res.status(400).json({ success: false });
    }
 }
-
-/*
-   db[job-opportunities].updateMany({
-      url: { $regex: /linkedin.com/i }
-   }, { 
-      $set: {
-         "source": "LinkedIn"
-      }
-   })
- */

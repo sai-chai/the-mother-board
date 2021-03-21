@@ -1,8 +1,7 @@
-import Link from "next/link";
 import styled from "styled-components";
 import MainHeader from "components/MainHeader";
 import BoardCard from "components/BoardCard";
-import { PageHeader, PageMain, GridWrapper } from "styles";
+import { PageHeader, PageMain } from "styles";
 
 function IndexPage(props) {
    return (
@@ -14,7 +13,7 @@ function IndexPage(props) {
             </PageHeader>
             <GridWrapper>
                {props.boards.map((board) => (
-                  <BoardCard board={board} />
+                  <BoardCard key={board._id} board={board} />
                ))}
             </GridWrapper>
          </PageMain>
@@ -36,3 +35,18 @@ IndexPage.getInitialProps = async (ctx) => {
 };
 
 export default IndexPage;
+
+const GridWrapper = styled.div.attrs({
+   role: "navigation"
+})`
+   display: grid;
+   grid-template-columns: repeat(1, 1fr);
+   gap: 2vw;
+   grid-auto-rows: minmax(200px, auto);
+   @media (min-width: 500px) {
+      grid-template-columns: repeat(2, 1fr);
+   }
+   @media (min-width: 1000px) {
+      grid-template-columns: repeat(3, 1fr);
+   }
+`;
