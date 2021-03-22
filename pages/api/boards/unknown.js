@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
             const results = opportunities
                .map((o) => {
-                  if (o.url === "") return true;
+                  if (o.url === "") return o.toObject();
                   const companySource =
                      o.url.match(
                         new RegExp(
@@ -49,3 +49,28 @@ export default async function handler(req, res) {
 const TLD_LB = `(?<!\\.(?:co(?:m|\\.\\w{2})?|net|org|edu|gov|io)\\/.*)`;
 // Capture domain minus subdomain(s)
 const DOMAIN_EXP = /\w*\.(?:co(?:m|\.\w{2})?|net|org|io|gov|edu)/g;
+
+/*
+   const opportunities = db['job-opportunities'].find({
+      source: { $exists: false }
+   }).toArray();
+
+   const updateSource = (_id, source) => 
+      db['job-opportunities'].updateOne({ _id: _id }, {
+         $set: { source: `${source}` }
+      });
+
+   const TLD_LB = `(?<!\\.(?:co(?:m|\\.\\w{2})?|net|org|edu|gov|io)\\/.*)`;
+
+   opportunities.forEach(o => {
+      if(o.url === "") return updateSource(o._id, "Unknown");
+      const isCompanySource = !!o.url.match(new RegExp(
+*/ //       TLD_LB + o.company.toLowerCase().match(/^\w*/g),
+/*          "g"
+         ));
+      if(isCompanySource) return updateSource(o._id, "Company Website");
+      return updateSource(o._id, "Unknown");
+   });
+
+   
+*/
