@@ -1,3 +1,9 @@
+# For Pathrise
+
+Let me start by saying this is definitely not an ideal implementation. Had I more time, I would've optimized for performance and used client-side data fetching. It would've also been more ideal to rely on the cached "source" fields I created on the database, but that approach wouldn't have left any code to showcase. I would've also made it DRYer by refactoring the conditional logic for handing the `company-site` and `unknown` api slugs into the `[queryId]` handler.
+
+That being said,
+
 # Hello World example
 
 This example shows the most basic idea behind Next. We have 2 pages: `pages/index.js` and `pages/about.js`. The former responds to `/` requests and the latter to `/about`. Using `next/link` you can add hyperlinks between them with universal routing capabilities. The `day` directory shows that you can have subdirectories.
