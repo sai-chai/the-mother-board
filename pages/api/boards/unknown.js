@@ -15,20 +15,25 @@ export default async function handler(req, res) {
             );
             const opportunities = await Opportunity.find({});
 
-            const results = opportunities.filter((o) => {
-               if (o.url === "") return true;
-               const companySource =
-                  o.url.match(
-                     new RegExp(
-                        TLD_LB + o.company.toLowerCase().match(/^\w*/g),
-                        "g"
-                     )
-                  ) || [];
-               const domain = o.url.match(DOMAIN_EXP) || [""];
-               return (
-                  !domains.includes(domain[0]) && companySource.length === 0
-               );
-            });
+            const results = opportunities
+               .map((o) => {
+                  if (o.url === "") return true;
+                  const companySource =
+                     o.url.match(
+                        new RegExp(
+                           TLD_LB + o.company.toLowerCase().match(/^\w*/g),
+                           "g"
+                        )
+                     ) || [];
+                  const domain = o.url.match(DOMAIN_EXP) || [""];
+                  if (
+                     !domains.includes(domain[0]) &&
+                     companySource.length === 0
+                  )
+                     return { ...o.toObject(), domain };
+                  return o.toObject();
+               })
+               .filter((o) => o.domain && o.domain.length > 0);
 
             res.status(200).json({ success: true, data: results });
          } catch (err) {

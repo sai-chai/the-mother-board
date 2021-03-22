@@ -7,13 +7,14 @@ export default async function handler(req, res) {
       method,
       query: { queryId }
    } = req;
+   let board;
 
    await dbConnect();
 
    switch (method) {
       case "GET":
          try {
-            const board = await Board.findOne(
+            board = await Board.findOne(
                {
                   _id: queryId
                },
@@ -24,12 +25,21 @@ export default async function handler(req, res) {
             );
             const opportunities = await Opportunity.find({
                url: {
-                  $regex: `^https?\\:\\/\\/(?:\\w*\\.)*${board.root_domain}\\/.*$`,
+                  $regex: `${board.root_domain}`,
                   $options: "i"
                }
             });
-            res.status(200).json({ success: true, data: opportunities });
+            res.status(200).json({
+               success: true,
+               data: { opportunities, board }
+            });
          } catch (err) {
+            if (board) {
+               res.status(202).json({
+                  success: false,
+                  data: { opportunities: null, board }
+               });
+            }
             res.status(400).json({ success: false });
          }
          break;

@@ -1,9 +1,14 @@
+import Link from "next/link";
 import styled from "styled-components";
 
 export default function MainHeader() {
    return (
       <StyledHeader>
-         <h1>The Mother Board</h1>
+         <Link href="/">
+            <h1>
+               <a tabIndex={0}>The Mother Board</a>
+            </h1>
+         </Link>
       </StyledHeader>
    );
 }

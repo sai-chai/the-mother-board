@@ -3,6 +3,11 @@ import MainHeader from "components/MainHeader";
 import BoardCard from "components/BoardCard";
 import { PageHeader, PageMain } from "styles";
 
+const genericLogoUri =
+   "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Globe_icon.svg/200px-Globe_icon.svg.png";
+const companyDesc = "Job postings directly from company websites.";
+const unknownDesc = "Job postings with no clear indication of their source.";
+
 function IndexPage(props) {
    return (
       <>
@@ -12,27 +17,47 @@ function IndexPage(props) {
                <h3>Job Sources</h3>
             </PageHeader>
             <GridWrapper>
+               <BoardCard
+                  board={{
+                     _id: "company-site",
+                     logo_file: genericLogoUri,
+                     name: "Company Site",
+                     description: companyDesc,
+                     rating: "N/A"
+                  }}
+               />
                {props.boards.map((board) => (
                   <BoardCard key={board._id} board={board} />
                ))}
+               <BoardCard
+                  board={{
+                     _id: "unknown",
+                     logo_file: genericLogoUri,
+                     name: "Unknown",
+                     description: unknownDesc,
+                     rating: "N/A"
+                  }}
+               />
             </GridWrapper>
          </PageMain>
       </>
    );
 }
 
-IndexPage.getInitialProps = async (ctx) => {
+export async function getServerSideProps(ctx) {
    try {
       const { host } = ctx?.req.headers;
       const res = await fetch(`http://${host}/api/boards`);
       const json = await res.json();
-      return { boards: json.data };
+      return { props: { boards: json.data } };
    } catch (err) {
       return {
-         boards: []
+         props: {
+            boards: []
+         }
       };
    }
-};
+}
 
 export default IndexPage;
 

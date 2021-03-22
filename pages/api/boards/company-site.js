@@ -10,13 +10,21 @@ export default async function handler(req, res) {
       case "GET":
          try {
             const opportunities = await Opportunity.find({});
-            const result = opportunities.filter(
-               (o) =>
-                  o.url.match(NEGATIVE_LB + o.company.toLowerCase()).length > 0
-            );
+            const result = opportunities
+               .map((o) => {
+                  const domain = o.url.match(
+                     NEGATIVE_LB +
+                        o.company.toLowerCase().match(/^\w*/g) +
+                        DOMAIN_EXP
+                  );
+                  return domain && domain[0]
+                     ? { ...o.toObject(), domain }
+                     : o.toObject();
+               })
+               .filter((o) => o.domain && o.domain.length > 0);
             res.status(200).json({ success: true, data: result });
          } catch (err) {
-            res.status(400).json({ success: false });
+            res.status(400).json({ success: false, message: err.message });
          }
          break;
       default:
@@ -25,7 +33,7 @@ export default async function handler(req, res) {
 }
 
 const NEGATIVE_LB = `(?<!\\.(?:co(?:m|\\.\\w{2})?|net|org|edu|gov|io)\\/.*)`;
-
+const DOMAIN_EXP = `\\.(?:co(?:m|\\.\\w{2})?|net|org|io|gov|edu)`;
 /*
    db['job-opportunities'].find({ 
       $where: function() {

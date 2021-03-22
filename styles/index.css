@@ -11,3 +11,11 @@ h5 {
    margin: 0;
    font-size: inherit;
 }
+
+a {
+   outline-offset: 3px;
+}
+
+a:hover {
+   cursor: pointer;
+}

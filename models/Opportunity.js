@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
 
-const OpportunitySchema = new mongoose.Schema({
+export const OpportunitySchema = new mongoose.Schema({
    id: Number,
    title: String,
    company: String,
-   url: String
+   url: String,
+   domain: {
+      type: [String, null],
+      required: true
+   }
 });
 
 export default mongoose.models.Opportunity ||

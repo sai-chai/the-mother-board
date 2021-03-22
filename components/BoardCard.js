@@ -4,17 +4,19 @@ import Link from "next/link";
 function BoardCard({ board }) {
    return (
       <Link href={`/boards/${board._id}`}>
-         <CardWrapper>
-            <CardAvatar>
-               <img src={board.logo_file} alt={board.name} />
-            </CardAvatar>
-            <CardBody>
-               <CardHeader rating={board.rating}>
-                  <h4>{board.name}</h4>
-                  <span>{board.rating}</span>
-               </CardHeader>
-               <p>{board.description}</p>
-            </CardBody>
+         <CardWrapper role="button">
+            <a tabIndex={0}>
+               <CardAvatar>
+                  <img src={board.logo_file} alt={board.name} />
+               </CardAvatar>
+               <CardBody>
+                  <CardHeader rating={board.rating}>
+                     <h4>{board.name}</h4>
+                     <span>{board.rating}</span>
+                  </CardHeader>
+                  <p>{board.description}</p>
+               </CardBody>
+            </a>
          </CardWrapper>
       </Link>
    );
@@ -75,15 +77,23 @@ const CardWrapper = styled.div`
    position: relative;
    z-index: 100;
    box-shadow: 0 0 10px #d3d3d3;
-   padding: 8px;
-   display: flex;
-   flex-wrap: nowrap;
-   align-items: stretch;
-   align-content: stretch;
-   @media (min-width: 500px) {
-      padding: 12px;
-   }
-   @media (min-width: 1000px) {
-      padding: 15px;
+   a {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      align-content: stretch;
+      height: calc(100% - 16px);
+      padding: 8px;
+      :hover {
+         cursor: pointer;
+      }
+      @media (min-width: 500px) {
+         height: calc(100% - 24px);
+         padding: 12px;
+      }
+      @media (min-width: 1000px) {
+         height: calc(100% - 30px);
+         padding: 15px;
+      }
    }
 `;
