@@ -47,3 +47,26 @@ export default async function handler(req, res) {
          res.status(400).json({ success: false });
    }
 }
+
+/*
+   // Not possible due to Atlas limitations
+   db['job-opportunities'].find({ 
+      $where: function() {
+         return obj.url.match(obj.company).length == 0
+      }
+   })
+
+   const boards = db['job-boards'].find({}).toArray();
+
+   const updateSource = (domain, name) => 
+      db['job-opportunities'].updateMany({
+         url: { $regex: `${domain}`, $options: 'i' }
+      }, {
+         $set: { source: `${name}` }
+      });
+   
+   
+   boards.forEach(board => 
+      updateSource(board.root_domain, board.name)
+   ); 
+*/

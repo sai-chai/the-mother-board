@@ -34,10 +34,3 @@ export default async function handler(req, res) {
 
 const NEGATIVE_LB = `(?<!\\.(?:co(?:m|\\.\\w{2})?|net|org|edu|gov|io)\\/.*)`;
 const DOMAIN_EXP = `\\.(?:co(?:m|\\.\\w{2})?|net|org|io|gov|edu)`;
-/*
-   db['job-opportunities'].find({ 
-      $where: function() {
-         return obj.url.match(obj.company).length == 0
-      }
-   })
- */
