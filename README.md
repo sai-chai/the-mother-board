@@ -2,4 +2,4 @@
 
 Mother of all job boards
 
-Deployed live at https://csb-6y50v.vercel.app/
+Deployed live at https://saichai-mother-board.vercel.app/
